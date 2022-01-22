@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2022-01-22 17:08:13">
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>false</action_insert>
+<action_query>false</action_query>
+<action_update>true</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>incident</collection>
+<condition>(current.priority == 1 || current.priority == 2) &amp;&amp; (previous.priority != current.priority)</condition>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="incident">active=true^EQ<item goto="false" or="false" field="active" endquery="false" value="true" operator="=" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Incident Priority Pushover (Update)</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+try { 
+	
+	var token = "YOUR-Pushover-APP-Token";
+	var user = "YOUR-Pushover-Group-Token";
+	var message = current.short_description + "\n \n" + current.description;
+	var title = current.number + " - PRIO " + current.priority + " (GETS PRIO)";
+	var url = "https://INSTANCENAME.service-now.com/nav_to.do?uri=incident.do?sys_id=" + current.sys_id;
+	var url_title = "Open " + current.number;
+	var priority = "-2";
+	var retry = "60";
+	var expire = "10800";
+	
+	if (current.priority == 1){
+		priority = "2";
+		retry = "60";
+		expire = "10800";
+	}
+	else if (current.priority == 2){
+		priority = "1";
+		retry = "60";
+		expire = "10800";
+	}
+	
+		
+	
+	var r = new sn_ws.RESTMessageV2('Pushover', 'post');
+	r.setStringParameterNoEscape('token', token);
+	r.setStringParameterNoEscape('user', user);
+	r.setStringParameterNoEscape('message', message);
+	r.setStringParameterNoEscape('title', title);
+	r.setStringParameterNoEscape('url', url);
+	r.setStringParameterNoEscape('url_title', url_title);
+	r.setStringParameterNoEscape('priority', priority);
+	r.setStringParameterNoEscape('retry', retry);
+	r.setStringParameterNoEscape('expire', expire);
+
+
+	var response = r.execute();
+	var responseBody = response.getBody();
+	var httpStatus = response.getStatusCode();
+	
+	
+}
+catch(ex) {
+ var exmessage = ex.message;
+}
+
+
+})(current, previous);]]></script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>m.wassenberg</sys_created_by>
+<sys_created_on>2022-01-13 14:21:14</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>34eb3415db450110ce4ce6c115961908</sys_id>
+<sys_mod_count>18</sys_mod_count>
+<sys_name>Incident Priority Pushover (Update)</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="Global" source="global">global</sys_package>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sys_script_34eb3415db450110ce4ce6c115961908</sys_update_name>
+<sys_updated_by>m.wassenberg</sys_updated_by>
+<sys_updated_on>2022-01-13 15:00:41</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+<sys_script action="INSERT_OR_UPDATE">
+<abort_action>false</abort_action>
+<access>package_private</access>
+<action_delete>false</action_delete>
+<action_insert>true</action_insert>
+<action_query>false</action_query>
+<action_update>false</action_update>
+<active>true</active>
+<add_message>false</add_message>
+<advanced>true</advanced>
+<change_fields>false</change_fields>
+<client_callable>false</client_callable>
+<collection>incident</collection>
+<condition/>
+<description/>
+<execute_function>false</execute_function>
+<filter_condition table="incident">active=true^priorityIN1,2^EQ<item goto="false" or="false" field="active" endquery="false" value="true" operator="=" newquery="false"/>
+<item goto="false" or="false" field="priority" endquery="false" value="1,2" operator="IN" newquery="false"/>
+<item goto="false" or="false" field="" endquery="true" value="" operator="=" newquery="false"/>
+</filter_condition>
+<is_rest>false</is_rest>
+<message/>
+<name>Incident Priority Pushover (Create)</name>
+<order>100</order>
+<priority>100</priority>
+<rest_method display_value=""/>
+<rest_method_text/>
+<rest_service display_value=""/>
+<rest_service_text/>
+<rest_variables/>
+<role_conditions/>
+<script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+
+try { 
+	
+	var token = "YOUR-Pushover-APP-Token";
+	var user = "YOUR-Pushover-Group-Token";
+	var message = current.short_description + "\n \n" + current.description;
+	var title = current.number + " - PRIO " + current.priority + " (CREATED)";
+	var url = "https://INSTANCENAME.service-now.com/nav_to.do?uri=incident.do?sys_id=" + current.sys_id;
+	var url_title = "Open " + current.number;
+	var priority = "-2";
+	var retry = "60";
+	var expire = "10800";
+	
+	if (current.priority == 1){
+		priority = "2";
+		retry = "60";
+		expire = "10800";
+	}
+	else if (current.priority == 2){
+		priority = "1";
+		retry = "60";
+		expire = "10800";
+	}
+	
+		
+	
+	var r = new sn_ws.RESTMessageV2('Pushover', 'post');
+	r.setStringParameterNoEscape('token', token);
+	r.setStringParameterNoEscape('user', user);
+	r.setStringParameterNoEscape('message', message);
+	r.setStringParameterNoEscape('title', title);
+	r.setStringParameterNoEscape('url', url);
+	r.setStringParameterNoEscape('url_title', url_title);
+	r.setStringParameterNoEscape('priority', priority);
+	r.setStringParameterNoEscape('retry', retry);
+	r.setStringParameterNoEscape('expire', expire);
+
+
+	var response = r.execute();
+	var responseBody = response.getBody();
+	var httpStatus = response.getStatusCode();
+	
+	
+}
+catch(ex) {
+ var exmessage = ex.message;
+}
+
+
+})(current, previous);]]></script>
+<sys_class_name>sys_script</sys_class_name>
+<sys_created_by>m.wassenberg</sys_created_by>
+<sys_created_on>2022-01-13 14:56:21</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>6234059ddb450110ce4ce6c1159619ee</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>Incident Priority Pushover (Create)</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="Global" source="global">global</sys_package>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sys_script_6234059ddb450110ce4ce6c1159619ee</sys_update_name>
+<sys_updated_by>m.wassenberg</sys_updated_by>
+<sys_updated_on>2022-01-13 14:56:57</sys_updated_on>
+<template/>
+<when>after</when>
+</sys_script>
+</unload>
