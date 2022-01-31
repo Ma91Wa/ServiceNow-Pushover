@@ -1,5 +1,6 @@
 # ServiceNow-Pushover
 Integration of [ServiceNow](https://servicenow.com) and [Pushover](https://www.pushover.net).
+Read the full story on [Medium.com](https://medium.com/@max_30877/servicenow-integration-with-pushover-58f35124223c).
 
 ## Description
 Implement a REST Message to send notofications from Servicenow to Pushover. In this example I will use it to send pushnotifications if an Incident with priority 1 or 2 is created or if the priority will change to 1 or 2.
